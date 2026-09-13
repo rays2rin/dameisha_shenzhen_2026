@@ -1,1 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIM SUM - Shenzhen & Hong Kong</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f6f8fb;
+      color: #202A3A;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding-bottom: 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ナビゲーションバー */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #edf2f7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .bar {
+      width: 20px;
+      height: 2px;
+      background-color: #202A3A;
+      border-radius: 2px;
+    }
+
+    /* 右寄せタイトル (Day1と完全同一の1.5px指定) */
+    .site-title {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .site-title a {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #202A3A;
+      text-decoration: none;
+    }
+
+    /* ドロワーメニュー */
+    .drawer-menu {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #ffffff;
+      z-index: 300;
+      transition: left 0.3s ease;
+      padding: 24px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    }
+
+    .drawer-menu.active { left: 0; }
+
+    .close-btn {
+      font-size: 20px;
+      cursor: pointer;
+      text-align: right;
+      margin-bottom: 20px;
+      color: #718096;
+    }
+
+    .drawer-menu ul { list-style: none; }
+    .drawer-menu li { margin-bottom: 16px; }
+    
+    /* メニュー項目 (Day1と完全同一の1px指定) */
+    .drawer-menu a {
+      text-decoration: none;
+      color: #202A3A;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .drawer-menu .divider {
+      height: 1px;
+      background-color: #edf2f7;
+      margin: 16px 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 200;
+      display: none;
+    }
+    .overlay.active { display: block; }
+
+    /* メインレイアウト */
+    .page-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 16px 16px 40px;
+    }
+
+    /* 戻るボタン */
+    .back-link {
+      display: inline-block;
+      font-size: 12.5px;
+      color: #718096;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-top: 16px; 
+      margin-bottom: 16px;
+    }
+
+    /* DIM SUM */
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: #202A3A;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+    }
+
+    /* 店舗カードコンテナ */
+    .shop-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* 店舗ごとのカード */
+    .shop-card {
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+    }
+
+    /* スライドショーコンテナ */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 180px; 
+      overflow: hidden;
+      background-color: #f0f4f8;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    /* 矢印ボタン */
+    .prev-btn, .next-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(32, 42, 58, 0.4);
+      color: #ffffff;
+      border: none;
+      font-size: 15px;
+      padding: 5px 9px;
+      cursor: pointer;
+      border-radius: 6px;
+      z-index: 10;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .prev-btn { left: 8px; }
+    .next-btn { right: 8px; }
+
+    .prev-btn:hover, .next-btn:hover {
+      background: rgba(32, 42, 58, 0.7);
+    }
+
+    /* ドットナビゲーション */
+    .dots-container {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: #ffffff;
+      width: 12px;
+      border-radius: 4px;
+    }
+
+    /* カード本体コンテンツ */
+    .card-body {
+      padding: 12px 14px;
+    }
+
+    /* 店名と支店名の横並びヘッダー */
+    .shop-header {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #edf2f7;
+      padding-bottom: 6px;
+    }
+
+    /* 店名 */
+    .shop-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #202A3A;
+      line-height: 1.2;
+    }
+
+    /* 店舗支店名 */
+    .branch-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 16px;
+      color: #718096;
+      font-weight: 400;
+    }
+
+    /* 店舗詳細情報リスト */
+    .shop-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      line-height: 1.4;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .info-label {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #202A3A;
+      min-width: 76px;
+      letter-spacing: 0.2px;
+    }
+
+    .info-value {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #202A3A;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <div class="site-title"><a href="index.html">SHENZHEN & HONG KONG</a></div>
+  </header>
+
+  <nav class="drawer-menu" id="drawerMenu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="day1.html">DAY 1</a></li>
+      <li><a href="day2.html">DAY 2</a></li>
+      <li><a href="day3.html">DAY 3</a></li>
+      <li class="divider"></li>
+      <li><a href="todo.html">todo</a></li>
+      <li><a href="expenses.html">expenses</a></li>
+      <li><a href="traffic.html">traffic</a></li>
+      <li><a href="foods.html">foods</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <main class="page-container">
+    <a href="foods.html" class="back-link">← グルメ一覧（foods）に戻る</a>
+
+    <div class="header-section">
+      <h1 class="page-title">DIM SUM</h1>
+    </div>
+
+    <div class="shop-list">
+
+      <div class="shop-card">
+        <div class="slider-container" id="slider1">
+          <div class="slider-wrapper">
+            <img src="IMG_3123.jpeg" alt="陶陶居 1" class="slide active">
+            <img src="IMG_3121.jpeg" alt="陶陶居 2" class="slide">
+            <img src="IMG_3124.jpeg" alt="陶陶居 3" class="slide">
+          </div>
+          <button class="prev-btn" onclick="moveSlide('slider1', -1)">‹</button>
+          <button class="next-btn" onclick="moveSlide('slider1', 1)">›</button>
+          <div class="dots-container">
+            <span class="dot active" onclick="setSlide('slider1', 0)"></span>
+            <span class="dot" onclick="setSlide('slider1', 1)"></span>
+            <span class="dot" onclick="setSlide('slider1', 2)"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="shop-header">
+            <span class="shop-name">陶陶居酒家</span>
+            <span class="branch-name">（卓悦中心店）</span>
+          </div>
+          <div class="shop-info-list">
+            <div class="info-item">
+              <span class="info-label">営業時間</span>
+              <span class="info-value">10:00〜</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">アクセス</span>
+              <span class="info-value">ホテルから徒歩30分 (1.8km)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-card">
+        <div class="slider-container" id="slider2">
+          <div class="slider-wrapper">
+            <img src="IMG_3126.jpeg" alt="利宝阁 1" class="slide active">
+            <img src="IMG_3125.jpeg" alt="利宝阁 2" class="slide">
+            <img src="IMG_3127.jpeg" alt="利宝阁 3" class="slide">
+          </div>
+          <button class="prev-btn" onclick="moveSlide('slider2', -1)">‹</button>
+          <button class="next-btn" onclick="moveSlide('slider2', 1)">›</button>
+          <div class="dots-container">
+            <span class="dot active" onclick="setSlide('slider2', 0)"></span>
+            <span class="dot" onclick="setSlide('slider2', 1)"></span>
+            <span class="dot" onclick="setSlide('slider2', 2)"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="shop-header">
+            <span class="shop-name">利宝阁</span>
+            <span class="branch-name">（嘉里建設広場店）</span>
+          </div>
+          <div class="shop-info-list">
+            <div class="info-item">
+              <span class="info-label">営業時間</span>
+              <span class="info-value">9:00〜</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">アクセス</span>
+              <span class="info-value">ホテルから徒歩23分 (1.3km)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('drawerMenu').classList.toggle('active');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    const slideIndexes = {
+      slider1: 0,
+      slider2: 0
+    };
+
+    function showSlide(sliderId, index) {
+      const slider = document.getElementById(sliderId);
+      const slides = slider.querySelectorAll('.slide');
+      const dots = slider.querySelectorAll('.dot');
+      
+      if (index >= slides.length) slideIndexes[sliderId] = 0;
+      else if (index < 0) slideIndexes[sliderId] = slides.length - 1;
+      else slideIndexes[sliderId] = index;
+
+      const currentIndex = slideIndexes[sliderId];
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentIndex);
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    function moveSlide(sliderId, step) {
+      showSlide(sliderId, slideIndexes[sliderId] + step);
+    }
+
+    function setSlide(sliderId, index) {
+      showSlide(sliderId, index);
+    }
+  </script>
+</body>
+</html>
 
