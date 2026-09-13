@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO & PACKING - Shenzhen & Hong Kong</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* navbar 内の要素を左右に振り分け、タイトルを右寄せにする指定 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    /* 右寄せタイトル (Day1と完全同一の 1.5px に指定) */
+    .site-title {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .site-title a {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #202A3A;
+      text-decoration: none;
+    }
+
+    /* ハンバーガーメニュー内リンク (Day1と完全同一の 1px に指定) */
+    .drawer-menu a {
+      text-decoration: none;
+      color: #202A3A;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <div class="site-title"><a href="index.html">SHENZHEN & HONG KONG</a></div>
+  </header>
+
+  <nav class="drawer-menu" id="drawerMenu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="day1.html">DAY 1</a></li>
+      <li><a href="day2.html">DAY 2</a></li>
+      <li><a href="day3.html">DAY 3</a></li>
+      <li class="divider"></li>
+      <li><a href="todo.html">todo</a></li>
+      <li><a href="expenses.html">expenses</a></li>
+      <li><a href="traffic.html">traffic</a></li>
+      <li><a href="foods.html">foods</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <main class="page-container">
+    
+    <div class="schedule-header">
+      <p class="schedule-sub">CHECKLIST</p>
+      <h1 class="schedule-title">TO DO & PACKING</h1>
+    </div>
+
+    <div class="checklist-card">
+      <h2 class="checklist-title">TODO</h2>
+      <div class="checklist-grid">
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">
+            eSIM (番号なし)<br>
+            <small>
+              <a href="https://esim.holafly.com/ja/" target="_blank">Holafly</a><br>
+              クーポンコード: <code>ONODA</code>
+            </small>
+          </span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">
+            eSIM (番号あり)<br>
+            <small><a href="https://www.cuniq.jp/detail-info?type=0" target="_blank">チョコSIM90</a></small>
+          </span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">旅行保険の加入</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">オンライン入国カード</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">WeChat 登録</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">Alipay 登録</span>
+        </label>
+
+      </div>
+    </div>
+
+    <div class="checklist-card">
+      <h2 class="checklist-title">持ち物</h2>
+      <div class="checklist-grid">
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">パスポート</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">充電器<br><small>(予備ケーブル2本)</small></span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">モバイルバッテリー<br><small>(43,200mAh以下)</small></span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">メガネ / コンタクト / 薬</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">クレジットカード</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span class="box"></span>
+          <span class="label-text">現金<br><small>(香港分)</small></span>
+        </label>
+
+      </div>
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">← TOP PAGE</a>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('drawerMenu').classList.toggle('active');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
 
