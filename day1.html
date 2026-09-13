@@ -1,1 +1,587 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAY 1 - Shenzhen & Hong Kong</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f6f8fb;
+      color: #202A3A;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ナビゲーションバー */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #edf2f7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .bar {
+      width: 20px;
+      height: 2px;
+      background-color: #202A3A;
+      border-radius: 2px;
+    }
+
+    .site-title {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .site-title a {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #202A3A;
+      text-decoration: none;
+    }
+
+    /* ドロワーメニュー */
+    .drawer-menu {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #ffffff;
+      z-index: 300;
+      transition: left 0.3s ease;
+      padding: 24px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    }
+
+    .drawer-menu.active { left: 0; }
+
+    .close-btn {
+      font-size: 20px;
+      cursor: pointer;
+      text-align: right;
+      margin-bottom: 20px;
+      color: #718096;
+    }
+
+    .drawer-menu ul { list-style: none; }
+    .drawer-menu li { margin-bottom: 16px; }
+    .drawer-menu a {
+      text-decoration: none;
+      color: #202A3A;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .drawer-menu .divider {
+      height: 1px;
+      background-color: #edf2f7;
+      margin: 16px 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 200;
+      display: none;
+    }
+    .overlay.active { display: block; }
+
+    /* メインレイアウト */
+    .page-container {
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px 20px;
+    }
+
+    /* ヘッダー */
+    .schedule-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .schedule-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      color: #718096;
+      margin-bottom: 6px;
+    }
+
+    .schedule-title {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #202A3A;
+      letter-spacing: 1px;
+    }
+
+    .schedule-date {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(32, 42, 58, 0.6);
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 上部の他日程ナビボタン */
+    .top-day-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .top-day-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #3d617c;
+      text-decoration: none;
+      padding: 4px 10px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .top-day-btn:hover {
+      border-color: #3d617c;
+      background-color: #f8fafc;
+    }
+
+    /* タイムラインコンテナ */
+    .timeline-container {
+      position: relative;
+      padding-left: 52px;
+      width: 100%;
+    }
+
+    /* タイムラインの縦線 */
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
+      background-color: #cbd5e1;
+    }
+
+    /* 各予定 */
+    .timeline-item {
+      position: relative;
+      padding-top: 22px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    }
+
+    .timeline-item:first-child {
+      padding-top: 0;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    /* タイムラインの丸 */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 26px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #3d617c;
+      z-index: 2;
+    }
+
+    .timeline-item:first-child::before {
+      top: 4px;
+    }
+
+    /* コンテンツ全体のラッパー */
+    .timeline-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* 時刻 */
+    .time {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    /* 予定名：通常のテキスト */
+    .action-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #202A3A;
+      display: block;
+      line-height: 1.35;
+    }
+
+    /* 予定名：リンクの場合（見出しとして大きく置く用） */
+    .place-link {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #3d617c;
+      text-decoration: underline;
+      text-decoration-color: rgba(61, 97, 124, 0.4);
+      text-underline-offset: 3px;
+      display: inline-block;
+      line-height: 1.35;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+
+    .place-link:hover {
+      color: #2b475d;
+      text-decoration-color: rgba(43, 71, 93, 0.8);
+    }
+
+    /* 補足テキスト */
+    .note-text {
+      font-size: 11px;
+      font-weight: 400;
+      color: #64748b;
+      margin-top: 3px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* 補足と同じサイズ・カラーのリンク（改行用） */
+    .note-link {
+      font-size: 11px;
+      font-weight: 400;
+      color: #3d617c;
+      text-decoration: underline;
+      text-decoration-color: rgba(61, 97, 124, 0.4);
+      text-underline-offset: 2px;
+      display: block;
+      margin-top: 3px;
+      line-height: 1.4;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+
+    .note-link:hover {
+      color: #2b475d;
+      text-decoration-color: rgba(43, 71, 93, 0.8);
+    }
+
+    /* 横並び配置用クラス */
+    .inline-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .inline-link {
+      font-size: 11px;
+      font-weight: 400;
+      color: #3d617c;
+      text-decoration: underline;
+      text-decoration-color: rgba(61, 97, 124, 0.4);
+      text-underline-offset: 2px;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+
+    .inline-link:hover {
+      color: #2b475d;
+      text-decoration-color: rgba(43, 71, 93, 0.8);
+    }
+
+    .inline-text {
+      font-size: 11px;
+      font-weight: 400;
+      color: #64748b;
+    }
+
+    /* MEMOフォーム */
+    .memo-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .memo-title {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #3d617c;
+      margin-bottom: 4px;
+    }
+
+    .memo-desc {
+      font-size: 11px;
+      font-weight: 300;
+      color: #718096;
+      margin-bottom: 14px;
+    }
+
+    .memo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .memo-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      resize: vertical;
+      min-height: 60px;
+      background: #f8fafc;
+      color: #202A3A;
+    }
+
+    .memo-input:focus {
+      border-color: #3d617c;
+      background: #ffffff;
+    }
+
+    .memo-btn {
+      align-self: flex-end;
+      background-color: #3d617c;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .memo-btn:hover {
+      background-color: #2b475d;
+    }
+
+    /* バックリンク */
+    .back-link {
+      margin-top: 36px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .back-link a {
+      font-family: 'Cinzel', serif;
+      color: #718096;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .back-link a:hover {
+      color: #3d617c;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <div class="site-title"><a href="index.html">SHENZHEN & HONG KONG</a></div>
+  </header>
+
+  <nav class="drawer-menu" id="drawerMenu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="day1.html">DAY 1</a></li>
+      <li><a href="day2.html">DAY 2</a></li>
+      <li><a href="day3.html">DAY 3</a></li>
+      <li class="divider"></li>
+      <li><a href="todo.html">todo</a></li>
+      <li><a href="expenses.html">expenses</a></li>
+      <li><a href="traffic.html">traffic</a></li>
+      <li><a href="foods.html">foods</a></li>
+      <li><a href="landmark.html">landmark</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <main class="page-container">
+    
+    <div class="schedule-header">
+      <p class="schedule-sub">TRAVEL SCHEDULE</p>
+      <h1 class="schedule-title">DAY 1</h1>
+      <p class="schedule-date">October 2026</p>
+      
+      <div class="top-day-nav">
+        <a href="day2.html" class="top-day-btn">DAY 2 →</a>
+        <a href="day3.html" class="top-day-btn">DAY 3 →</a>
+      </div>
+    </div>
+
+    <div class="timeline-container">
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">08:30</span>
+          <span class="action-text">羽田空港</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">11:10</span>
+          <span class="action-text">搭乗</span>
+          <span class="note-text">便名: NH965</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">15:10</span>
+          <span class="action-text">深圳宝安国際空港</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">15:30 - 16:30</span>
+          <a class="place-link" href="https://www.hyatt.com/en-US/hotel/china/urcove-shenzhen-futian-cbd/uc031" target="_blank">UrCove Hotel</a>
+          <span class="note-text">チェックイン</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">16:30 - 17:30</span>
+          <span class="action-text">香港へ移動</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">17:30 - 18:30</span>
+          <span class="action-text">尖沙咀</span>
+          <div class="inline-row">
+            <a class="inline-link" href="landmark.html#k11">K11 MUSEA</a>
+            <span class="inline-text">etc.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">18:30 - 19:00</span>
+          <a class="place-link" href="https://www.starferry.com.hk/" target="_blank">スターフェリー</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">19:30 - 20:30</span>
+          <span class="action-text">中環エリア</span>
+          <a class="note-link" href="foods.html">食事</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">21:00 - 22:00</span>
+          <a class="place-link" href="landmark.html#victoria-peak">ヴィクトリアピーク</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">22:00 - 23:00</span>
+          <a class="place-link" href="landmark.html#temple-street">男人街</a>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">23:00 -</span>
+          <span class="action-text">深圳へ</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="memo-card">
+      <div class="memo-title">MEMO</div>
+      <p class="memo-desc">行きたいお店やリンクを自由にメモとして送ろう。</p>
+      <form class="memo-form" action="https://formspree.io/f/your_form_id" method="POST">
+        <textarea class="memo-input" name="message" placeholder="メモを入力..." required></textarea>
+        <button type="submit" class="memo-btn">送信する</button>
+      </form>
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">← TOP PAGE</a>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('drawerMenu').classList.toggle('active');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
 
