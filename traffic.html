@@ -1,1 +1,739 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRANSPORTATION - Shenzhen & Hong Kong</title>
+
+  <!-- フォント読み込み -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #fcfcf9;
+      color: #202A3A;
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ナビゲーションバー */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #edf2f7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .bar {
+      width: 20px;
+      height: 2px;
+      background-color: #202A3A;
+      border-radius: 2px;
+    }
+
+    .site-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      color: #202A3A;
+    }
+
+    /* ドロワーメニュー */
+    .drawer-menu {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 100%;
+      background-color: #ffffff;
+      z-index: 300;
+      transition: left 0.3s ease;
+      padding: 24px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    }
+
+    .drawer-menu.active { left: 0; }
+
+    .close-btn {
+      font-size: 20px;
+      cursor: pointer;
+      text-align: right;
+      margin-bottom: 20px;
+      color: #718096;
+    }
+
+    .drawer-menu ul { list-style: none; }
+    .drawer-menu li { margin-bottom: 16px; }
+    .drawer-menu a {
+      text-decoration: none;
+      color: #202A3A;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .drawer-menu .divider {
+      height: 1px;
+      background-color: #edf2f7;
+      margin: 16px 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 200;
+      display: none;
+    }
+    .overlay.active { display: block; }
+
+    /* メインレイアウト */
+    .page-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* ページヘッダー */
+    .header-section {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1f2b1a;
+      letter-spacing: 2px;
+    }
+
+    .page-sub {
+      font-size: 12px;
+      color: #718096;
+      margin-top: 4px;
+    }
+
+    /* 路線図を見るボタン */
+    .map-link-container {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .map-btn {
+      display: inline-block;
+      padding: 5px 14px;
+      font-size: 11px;
+      color: #5b7083;
+      background-color: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .map-btn:hover {
+      background-color: #f6f8fa;
+      border-color: #b0b9c2;
+    }
+
+    /* 検索ボックス */
+    .filter-card {
+      background: #ffffff;
+      border: 1px solid #e5e2d5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .select-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .select-item {
+      flex: 1;
+    }
+
+    .select-item label {
+      display: block;
+      font-size: 10px;
+      color: #718096;
+      margin-bottom: 4px;
+    }
+
+    .select-item select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #e2ded0;
+      border-radius: 6px;
+      font-size: 12px;
+      background: #fcfcf9;
+      color: #202A3A;
+      outline: none;
+    }
+
+    .swap-icon {
+      margin-top: 14px;
+      color: #718096;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .swap-icon:hover {
+      background: #edf2f7;
+    }
+
+    /* 移動手段タブ */
+    .transport-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .t-tab {
+      flex: 1;
+      text-align: center;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #e2ded0;
+      background: #ffffff;
+      font-size: 11px;
+      color: #555;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .t-tab.active {
+      background: #1e2d1d;
+      color: #ffffff;
+      border-color: #1e2d1d;
+    }
+
+    /* 合計金額カード */
+    .summary-box {
+      background: #f7f6f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .summary-label {
+      font-size: 10px;
+      color: #718096;
+      margin-bottom: 2px;
+    }
+
+    .summary-amount {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e2d1d;
+    }
+
+    .summary-time {
+      font-size: 11px;
+      color: #555;
+    }
+
+    /* セクション名 */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #202A3A;
+      margin: 20px 0 12px 0;
+    }
+
+    /* ルートカードリスト */
+    .route-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .route-card {
+      background: #ffffff;
+      border: 1px solid #e5e2d5;
+      border-radius: 10px;
+      padding: 14px;
+      position: relative;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .transport-type {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .badge-recommend {
+      font-size: 9px;
+      background: #edf2f7;
+      color: #4a5568;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: normal;
+    }
+
+    .time-badge {
+      font-size: 11px;
+      color: #718096;
+    }
+
+    .checkbox-custom {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .route-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #202A3A;
+      margin-bottom: 6px;
+    }
+
+    .price-display {
+      margin-bottom: 8px;
+    }
+
+    .price-val {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e2d1d;
+    }
+
+    .price-sub {
+      font-size: 10px;
+      color: #718096;
+      margin-left: 4px;
+    }
+
+    .access-info {
+      font-size: 10px;
+      color: #666;
+      line-height: 1.4;
+      background: #fcfcf9;
+      padding: 6px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .select-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 11px;
+      color: #4a5568;
+      cursor: pointer;
+    }
+
+    .select-btn.selected {
+      background: #1e2d1d;
+      color: #ffffff;
+      border-color: #1e2d1d;
+    }
+
+    /* ヒント */
+    .hint-box {
+      margin-top: 24px;
+      background: #f0f3eb;
+      border: 1px solid #d4dfc7;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .hint-icon {
+      font-size: 16px;
+    }
+
+    .hint-text-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1e2d1d;
+      margin-bottom: 2px;
+    }
+
+    .hint-text-desc {
+      font-size: 10px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    /* フッター固定表示 */
+    .sticky-footer {
+      display: none;
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 468px;
+      background: #1e2d1d;
+      color: #ffffff;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      z-index: 90;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーションバー -->
+  <header class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <div class="site-title"><a href="index.html" style="text-decoration:none; color:inherit;">SHENZHEN & HONG KONG</a></div>
+  </header>
+
+  <!-- ドロワーメニュー -->
+  <nav class="drawer-menu" id="drawerMenu">
+    <div class="close-btn" onclick="toggleMenu()">✕</div>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="day1.html">DAY 1</a></li>
+      <li><a href="day2.html">DAY 2</a></li>
+      <li><a href="day3.html">DAY 3</a></li>
+      <li class="divider"></li>
+      <li><a href="todo.html">todo</a></li>
+      <li><a href="expenses.html">expenses</a></li>
+      <li><a href="traffic.html">traffic</a></li>
+      <li><a href="foods.html">foods</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <!-- メインコンテンツ -->
+  <main class="page-container">
+
+    <div class="header-section">
+      <h1 class="page-title">TRANSPORTATION</h1>
+    </div>
+
+    <!-- 路線図を見るボタン -->
+    <div class="map-link-container">
+      <a href="routemap.html" class="map-btn">路線図を見る ↗</a>
+    </div>
+
+    <!-- 検索・フィルターフォーム -->
+    <div class="filter-card">
+      <div class="select-group">
+        <div class="select-item">
+          <label>出発地</label>
+          <select id="start-point" onchange="onFilterChange()">
+            <option value="" selected>選択してください</option>
+            <optgroup label="香港">
+              <option value="西九龍">西九龍</option>
+              <option value="尖沙咀">尖沙咀</option>
+              <option value="中環">中環</option>
+              <option value="花園道">花園道</option>
+              <option value="旺角">旺角</option>
+              <option value="太平山頂">太平山頂</option>
+              <option value="皇岗">皇岗</option>
+            </optgroup>
+            <optgroup label="深圳">
+              <option value="逸扉酒店">逸扉酒店</option>
+              <option value="深圳湾公園">深圳湾公園</option>
+              <option value="华强北">华强北</option>
+              <option value="市民中心">市民中心</option>
+              <option value="莲花山公园">莲花山公园</option>
+              <option value="东门老街">东门老街</option>
+              <option value="深圳之眼">深圳之眼</option>
+              <option value="海上世界">海上世界</option>
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="陶陶居">陶陶居</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="swap-icon" onclick="swapLocations()" title="出発地と目的地を入れ替える">⇄</div>
+        <div class="select-item">
+          <label>目的地</label>
+          <select id="end-point" onchange="onFilterChange()">
+            <option value="" selected>選択してください</option>
+            <optgroup label="香港">
+              <option value="尖沙咀">尖沙咀</option>
+              <option value="西九龍">西九龍</option>
+              <option value="中環">中環</option>
+              <option value="太平山頂">太平山頂</option>
+              <option value="旺角">旺角</option>
+              <option value="花園道">花園道</option>
+              <option value="皇岗">皇岗</option>
+            </optgroup>
+            <optgroup label="深圳">
+              <option value="逸扉酒店">逸扉酒店</option>
+              <option value="华强北">华强北</option>
+              <option value="市民中心">市民中心</option>
+              <option value="东门老街">东门老街</option>
+              <option value="深圳之眼">深圳之眼</option>
+              <option value="莲花山公园">莲花山公园</option>
+              <option value="深圳湾公園">深圳湾公園</option>
+              <option value="海上世界">海上世界</option>
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="陶陶居">陶陶居</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <!-- 移動手段絞り込みタブ -->
+      <div class="transport-tabs">
+        <div class="t-tab active" onclick="setTab(this, 'hk')">香港</div>
+        <div class="t-tab" onclick="setTab(this, 'sz')">深圳</div>
+      </div>
+
+      <!-- 合計金額・時間表示 -->
+      <div class="summary-box">
+        <div>
+          <div class="summary-label">選択ルートの目安金額</div>
+          <div class="summary-amount" id="total-price">¥--</div>
+        </div>
+        <div class="summary-time">所要時間 <span id="total-time">--分</span></div>
+      </div>
+    </div>
+
+    <div class="section-label">おすすめルート一覧</div>
+
+    <!-- ルート一覧 -->
+    <div class="route-cards-container" id="routes-list"></div>
+
+    
+  </main>
+
+  <!-- フッター固定表示 -->
+  <div class="sticky-footer" id="sticky-btn" onclick="scrollToTop()">
+    選択したルートを見る (<span id="selected-count">0</span>件)
+  </div>
+
+  <script>
+    const routesData = [
+      // 香港ルート
+      { id: 1, area: 'hk', from: '皇岗', to: '尖沙咀', time: 30, hkd: 400, jpy: 9200, type: 'タクシー', note: '皇岗口岸から尖沙咀まで直行', recommend: true },
+      { id: 2, area: 'hk', from: '西九龍', to: '尖沙咀', time: 10, hkd: 45, jpy: 1000, type: 'タクシー', note: '高速鉄道駅からのアクセス', recommend: false },
+      { id: 3, area: 'hk', from: '中環', to: '太平山頂', time: 15, hkd: 90, jpy: 2100, type: 'タクシー', note: '山頂アクセス（山道経由）', recommend: false },
+      { id: 4, area: 'hk', from: '花園道', to: '中環', time: 5, hkd: 35, jpy: 800, type: 'タクシー', note: 'ピークトラム乗り場近くから', recommend: false },
+      { id: 5, area: 'hk', from: '花園道', to: '旺角', time: 25, hkd: 120, jpy: 2800, type: 'タクシー', note: '九龍エリアへ移動', recommend: false },
+      { id: 6, area: 'hk', from: '旺角', to: '皇岗', time: 30, hkd: 380, jpy: 8700, type: 'タクシー', note: '旺角から国境口岸へ', recommend: false },
+
+      // 深圳ルート
+      { id: 7, area: 'sz', from: '深圳宝安国際空港', to: '逸扉酒店', time: 40, cny: 60, jpy: 1600, type: '配車/タクシー', note: '空港からのスムーズ移動', recommend: true },
+      { id: 8, area: 'sz', from: '逸扉酒店', to: '莲花山公园', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '公園まで短時間アクセス', recommend: false },
+      { id: 9, area: 'sz', from: '莲花山公园', to: '陶陶居', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '飲茶スポットへの移動', recommend: false },
+      { id: 10, area: 'sz', from: '陶陶居', to: '深圳湾公園', time: 30, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ベイエリアへの移動', recommend: false },
+      { id: 11, area: 'sz', from: '深圳湾公園', to: '深圳之眼', time: 20, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ランドマーク間移動', recommend: false },
+      { id: 12, area: 'sz', from: '深圳湾公園', to: '海上世界', time: 30, cny: 50, jpy: 1350, type: '配車/タクシー', note: '商業エリアへ移動', recommend: false },
+      { id: 13, area: 'sz', from: '海上世界', to: '华强北', time: 25, cny: 80, jpy: 2200, type: '配車/タクシー', note: '電気街への移動', recommend: false },
+      { id: 14, area: 'sz', from: '逸扉酒店', to: '海上世界', time: 40, cny: 50, jpy: 1350, type: '配車/タクシー', note: 'ホテルからダイレクト移動', recommend: false },
+      { id: 15, area: 'sz', from: '海上世界', to: '深圳宝安国際空港', time: 40, cny: 70, jpy: 1900, type: '配車/タクシー', note: '空港への帰り', recommend: false },
+      { id: 16, area: 'sz', from: '华强北', to: '东门老街', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: '老街繁華街へ', recommend: false },
+      { id: 17, area: 'sz', from: '东门老街', to: '市民中心', time: 20, cny: 20, jpy: 600, type: '配車/タクシー', note: '市民中心エリアへ', recommend: false },
+      { id: 18, area: 'sz', from: '华强北', to: '市民中心', time: 4, cny: 2, jpy: 40, type: '地下鉄 (2駅)', note: '地下鉄2号線・8号線で直通4分', recommend: true }
+    ];
+
+    let selectedRouteIds = [];
+    let currentAreaFilter = 'hk';
+
+    function toggleMenu() {
+      document.getElementById('drawerMenu').classList.toggle('active');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function setTab(element, area) {
+      document.querySelectorAll('.t-tab').forEach(tab => tab.classList.remove('active'));
+      element.classList.add('active');
+      currentAreaFilter = area;
+      onFilterChange();
+    }
+
+    function swapLocations() {
+      const startSelect = document.getElementById('start-point');
+      const endSelect = document.getElementById('end-point');
+      const temp = startSelect.value;
+      startSelect.value = endSelect.value;
+      endSelect.value = temp;
+      onFilterChange();
+    }
+
+    function onFilterChange() {
+      const start = document.getElementById('start-point').value;
+      const end = document.getElementById('end-point').value;
+
+      if (!start || !end) {
+        renderRoutes([], start, end, true);
+        updateSummary();
+        return;
+      }
+
+      const filtered = routesData.filter(r => {
+        const matchArea = r.area === currentAreaFilter;
+        const isDirectMatch = (r.from === start && r.to === end);
+        const isReverseMatch = (r.from === end && r.to === start);
+
+        return matchArea && (isDirectMatch || isReverseMatch);
+      });
+
+      renderRoutes(filtered, start, end, false);
+      updateSummary();
+    }
+
+    function renderRoutes(routes, currentStart, currentEnd, isUnselected) {
+      const container = document.getElementById('routes-list');
+      container.innerHTML = '';
+
+      if (isUnselected) {
+        container.innerHTML = '<div style="text-align:center; padding:30px; color:#718096; font-size:12px;">出発地と目的地を選択してください</div>';
+        return;
+      }
+
+      if (routes.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:30px; color:#718096; font-size:12px;">該当するルートが見つかりませんでした</div>';
+        return;
+      }
+
+      routes.forEach(route => {
+        const isChecked = selectedRouteIds.includes(route.id);
+        const card = document.createElement('div');
+        card.className = 'route-card';
+
+        let priceText = route.area === 'hk' ? `HK$ ${route.hkd}` : `${route.cny} 元`;
+        const displayTitle = `${currentStart} ➔ ${currentEnd}`;
+
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="transport-type">
+              <span>${route.type.includes('地下鉄') ? '🚇' : '🚖'} ${route.type}</span>
+              ${route.recommend ? '<span class="badge-recommend">おすすめ</span>' : ''}
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="time-badge">約 ${route.time} 分</span>
+              <input type="checkbox" class="checkbox-custom" ${isChecked ? 'checked' : ''} onchange="toggleSelect(${route.id})">
+            </div>
+          </div>
+          <div class="route-title">${displayTitle}</div>
+          <div class="price-display">
+            <span class="price-val">${priceText}</span>
+            <span class="price-sub">(約 ¥${route.jpy.toLocaleString()})</span>
+          </div>
+          <div class="access-info">
+            ・${route.note}<br>
+            ・所要時間は目安となります
+          </div>
+          <div class="card-bottom">
+            <button class="select-btn ${isChecked ? 'selected' : ''}" onclick="toggleSelect(${route.id})">
+              ${isChecked ? '選択中' : '選択する'}
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleSelect(id) {
+      if (selectedRouteIds.includes(id)) {
+        selectedRouteIds = selectedRouteIds.filter(item => item !== id);
+      } else {
+        selectedRouteIds.push(id);
+      }
+      onFilterChange();
+    }
+
+    function updateSummary() {
+      const stickyBtn = document.getElementById('sticky-btn');
+
+      if (selectedRouteIds.length === 0) {
+        document.getElementById('total-price').innerText = '¥--';
+        document.getElementById('total-time').innerText = '--分';
+        document.getElementById('selected-count').innerText = '0';
+        stickyBtn.style.display = 'none';
+        return;
+      }
+
+      stickyBtn.style.display = 'block';
+
+      let totalJpy = 0;
+      let totalTime = 0;
+
+      selectedRouteIds.forEach(id => {
+        const item = routesData.find(r => r.id === id);
+        if (item) {
+          totalJpy += item.jpy;
+          totalTime += item.time;
+        }
+      });
+
+      document.getElementById('total-price').innerText = `約 ¥${totalJpy.toLocaleString()}`;
+      document.getElementById('total-time').innerText = `約 ${totalTime}分`;
+      document.getElementById('selected-count').innerText = selectedRouteIds.length;
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 初期状態は未選択スタート
+    onFilterChange();
+  </script>
+</body>
+</html>
