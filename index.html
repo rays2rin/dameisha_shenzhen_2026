@@ -33,10 +33,10 @@
       margin-top: 25px;
     }
 
-    /* 2段目：DAY 4 / 5（2つ並びで次の行に配置） */
+    /* 2段目：DAY 4 / 5（DAY 1〜3と同じサイズ感・同じ3カラム幅で左側に並べる） */
     .day-row-2 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-top: 10px;
     }
@@ -121,7 +121,7 @@
           <a href="day3.html" class="btn btn-primary">DAY 3</a>
         </div>
 
-        <!-- 追加：DAY選択タブの2行目 (DAY 4〜5) -->
+        <!-- 追加：DAY選択タブの2行目 (DAY 4〜5 ※サイズを揃えるため3分割の左側2つ分に配置) -->
         <div class="day-row-2">
           <a href="day4.html" class="btn btn-primary">DAY 4</a>
           <a href="day5.html" class="btn btn-primary">DAY 5</a>
