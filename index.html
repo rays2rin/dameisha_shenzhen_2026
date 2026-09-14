@@ -33,12 +33,15 @@
       margin-top: 25px;
     }
 
-    /* 2段目：DAY 4 / 5（DAY 1〜3と同じサイズ感・同じ3カラム幅で左側に並べる） */
+    /* 2段目：DAY 4 / 5（DAY 1〜3と同じサイズ感のまま中央に配置） */
     .day-row-2 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin-top: 10px;
+      width: 66.666%; /* 3列中の2列分の幅にする */
+      margin-left: auto;
+      margin-right: auto; /* 左右の余白を自動にして中央寄せ */
     }
 
     /* 左右線付きテキストラベル（TRIP / PLAN） */
@@ -121,7 +124,7 @@
           <a href="day3.html" class="btn btn-primary">DAY 3</a>
         </div>
 
-        <!-- 追加：DAY選択タブの2行目 (DAY 4〜5 ※サイズを揃えるため3分割の左側2つ分に配置) -->
+        <!-- 2段目：DAY選択タブ (DAY 4〜5 ※中央揃え) -->
         <div class="day-row-2">
           <a href="day4.html" class="btn btn-primary">DAY 4</a>
           <a href="day5.html" class="btn btn-primary">DAY 5</a>
