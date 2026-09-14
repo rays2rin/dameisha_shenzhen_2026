@@ -524,10 +524,10 @@
         </div>
       </div>
 
-      <!-- 移動手段絞り込みタブ -->
+      <!-- 移動手段絞り込みタブ（深圳を左、香港を右に変更） -->
       <div class="transport-tabs">
-        <div class="t-tab active" onclick="setTab(this, 'hk')">香港</div>
-        <div class="t-tab" onclick="setTab(this, 'sz')">深圳</div>
+        <div class="t-tab active" onclick="setTab(this, 'sz')">深圳</div>
+        <div class="t-tab" onclick="setTab(this, 'hk')">香港</div>
       </div>
 
       <!-- 合計金額・時間表示 -->
@@ -592,7 +592,7 @@
     ];
 
     let selectedRouteIds = [];
-    let currentAreaFilter = 'hk';
+    let currentAreaFilter = 'sz'; // 初期表示を深圳に変更
 
     function toggleMenu() {
       document.getElementById('drawerMenu').classList.toggle('active');
@@ -731,7 +731,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 初期状態は未選択スタート
+    // 初期状態は未選択スタート（タブの順序変更に伴い初期エリアも深圳に設定）
     onFilterChange();
   </script>
 </body>
