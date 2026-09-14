@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -385,35 +384,6 @@
       border-color: #1e2d1d;
     }
 
-    /* ヒント */
-    .hint-box {
-      margin-top: 24px;
-      background: #f0f3eb;
-      border: 1px solid #d4dfc7;
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    .hint-icon {
-      font-size: 16px;
-    }
-
-    .hint-text-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: #1e2d1d;
-      margin-bottom: 2px;
-    }
-
-    .hint-text-desc {
-      font-size: 10px;
-      color: #555;
-      line-height: 1.4;
-    }
-
     /* フッター固定表示 */
     .sticky-footer {
       display: none;
@@ -497,6 +467,18 @@
               <option value="皇岗">皇岗</option>
             </optgroup>
             <optgroup label="深圳">
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="大梅沙洲际">大梅沙洲际</option>
+              <option value="JW万豪">JW万豪</option>
+              <option value="海上世界">海上世界</option>
+              <option value="深业上城">深业上城</option>
+              <option value="福田">福田</option>
+              <option value="大梅沙">大梅沙</option>
+              <option value="小梅沙">小梅沙</option>
+              <option value="福田口岸">福田口岸</option>
+              <option value="万象天地">万象天地</option>
+              <option value="COCO Park">COCO Park</option>
+              <option value="Riad">Riad</option>
               <option value="逸扉酒店">逸扉酒店</option>
               <option value="深圳湾公園">深圳湾公園</option>
               <option value="华强北">华强北</option>
@@ -504,8 +486,6 @@
               <option value="莲花山公园">莲花山公园</option>
               <option value="东门老街">东门老街</option>
               <option value="深圳之眼">深圳之眼</option>
-              <option value="海上世界">海上世界</option>
-              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
               <option value="陶陶居">陶陶居</option>
             </optgroup>
           </select>
@@ -525,6 +505,18 @@
               <option value="皇岗">皇岗</option>
             </optgroup>
             <optgroup label="深圳">
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="大梅沙洲际">大梅沙洲际</option>
+              <option value="JW万豪">JW万豪</option>
+              <option value="海上世界">海上世界</option>
+              <option value="深业上城">深业上城</option>
+              <option value="福田">福田</option>
+              <option value="大梅沙">大梅沙</option>
+              <option value="小梅沙">小梅沙</option>
+              <option value="福田口岸">福田口岸</option>
+              <option value="万象天地">万象天地</option>
+              <option value="COCO Park">COCO Park</option>
+              <option value="Riad">Riad</option>
               <option value="逸扉酒店">逸扉酒店</option>
               <option value="华强北">华强北</option>
               <option value="市民中心">市民中心</option>
@@ -532,8 +524,6 @@
               <option value="深圳之眼">深圳之眼</option>
               <option value="莲花山公园">莲花山公园</option>
               <option value="深圳湾公園">深圳湾公園</option>
-              <option value="海上世界">海上世界</option>
-              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
               <option value="陶陶居">陶陶居</option>
             </optgroup>
           </select>
@@ -561,7 +551,6 @@
     <!-- ルート一覧 -->
     <div class="route-cards-container" id="routes-list"></div>
 
-    
   </main>
 
   <!-- フッター固定表示 -->
@@ -579,19 +568,33 @@
       { id: 5, area: 'hk', from: '花園道', to: '旺角', time: 25, hkd: 120, jpy: 2800, type: 'タクシー', note: '九龍エリアへ移動', recommend: false },
       { id: 6, area: 'hk', from: '旺角', to: '皇岗', time: 30, hkd: 380, jpy: 8700, type: 'タクシー', note: '旺角から国境口岸へ', recommend: false },
 
-      // 深圳ルート
-      { id: 7, area: 'sz', from: '深圳宝安国際空港', to: '逸扉酒店', time: 40, cny: 60, jpy: 1600, type: '配車/タクシー', note: '空港からのスムーズ移動', recommend: true },
-      { id: 8, area: 'sz', from: '逸扉酒店', to: '莲花山公园', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '公園まで短時間アクセス', recommend: false },
-      { id: 9, area: 'sz', from: '莲花山公园', to: '陶陶居', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '飲茶スポットへの移動', recommend: false },
-      { id: 10, area: 'sz', from: '陶陶居', to: '深圳湾公園', time: 30, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ベイエリアへの移動', recommend: false },
-      { id: 11, area: 'sz', from: '深圳湾公園', to: '深圳之眼', time: 20, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ランドマーク間移動', recommend: false },
-      { id: 12, area: 'sz', from: '深圳湾公園', to: '海上世界', time: 30, cny: 50, jpy: 1350, type: '配車/タクシー', note: '商業エリアへ移動', recommend: false },
-      { id: 13, area: 'sz', from: '海上世界', to: '华强北', time: 25, cny: 80, jpy: 2200, type: '配車/タクシー', note: '電気街への移動', recommend: false },
-      { id: 14, area: 'sz', from: '逸扉酒店', to: '海上世界', time: 40, cny: 50, jpy: 1350, type: '配車/タクシー', note: 'ホテルからダイレクト移動', recommend: false },
-      { id: 15, area: 'sz', from: '海上世界', to: '深圳宝安国際空港', time: 40, cny: 70, jpy: 1900, type: '配車/タクシー', note: '空港への帰り', recommend: false },
-      { id: 16, area: 'sz', from: '华强北', to: '东门老街', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: '老街繁華街へ', recommend: false },
-      { id: 17, area: 'sz', from: '东门老街', to: '市民中心', time: 20, cny: 20, jpy: 600, type: '配車/タクシー', note: '市民中心エリアへ', recommend: false },
-      { id: 18, area: 'sz', from: '华强北', to: '市民中心', time: 4, cny: 2, jpy: 40, type: '地下鉄 (2駅)', note: '地下鉄2号線・8号線で直通4分', recommend: true }
+      // 深圳ルート（追加分含む）
+      { id: 7, area: 'sz', from: '深圳宝安国際空港', to: '大梅沙洲际', time: 65, cny: 200, jpy: 5400, type: '配車/タクシー', note: '空港から大梅沙洲际へ', recommend: true },
+      { id: 8, area: 'sz', from: '大梅沙洲际', to: 'JW万豪', time: 50, cny: 140, jpy: 3800, type: '配車/タクシー', note: 'リゾートエリアからJW万豪へ', recommend: false },
+      { id: 9, area: 'sz', from: 'JW万豪', to: '海上世界', time: 30, cny: 60, jpy: 1600, type: '配車/タクシー', note: '海上世界へ移動', recommend: false },
+      { id: 10, area: 'sz', from: '深业上城', to: 'JW万豪', time: 20, cny: 40, jpy: 1100, type: '配車/タクシー', note: '深业上城からJW万豪へ', recommend: false },
+      { id: 11, area: 'sz', from: 'JW万豪', to: '深圳宝安国際空港', time: 35, cny: 85, jpy: 2300, type: '配車/タクシー', note: '空港への帰り', recommend: false },
+      { id: 12, area: 'sz', from: 'JW万豪', to: '福田', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: '福田エリアへ短時間移動', recommend: false },
+      { id: 13, area: 'sz', from: '大梅沙', to: '小梅沙', time: 7, cny: 20, jpy: 540, type: '配車/タクシー', note: '近隣のビーチエリア間移動', recommend: false },
+      { id: 14, area: 'sz', from: 'JW万豪', to: '福田口岸', time: 10, cny: 30, jpy: 800, type: '配車/タクシー', note: '口岸（国境）へスピーディーに移動', recommend: false },
+      { id: 15, area: 'sz', from: 'JW万豪', to: '万象天地', time: 25, cny: 55, jpy: 1500, type: '配車/タクシー', note: 'ショッピングモールへ移動', recommend: false },
+      { id: 16, area: 'sz', from: 'JW万豪', to: 'COCO Park', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: 'COCO Parkへ移動', recommend: false },
+      { id: 17, area: 'sz', from: 'JW万豪', to: 'Riad', time: 12, cny: 25, jpy: 700, type: '配車/タクシー', note: 'Riadへ移動', recommend: false },
+      { id: 18, area: 'sz', from: 'Riad', to: '福田口岸', time: 12, cny: 30, jpy: 800, type: '配車/タクシー', note: 'Riadから福田口岸へ', recommend: false },
+
+      // 既存の深圳ルート
+      { id: 19, area: 'sz', from: '深圳宝安国際空港', to: '逸扉酒店', time: 40, cny: 60, jpy: 1600, type: '配車/タクシー', note: '空港からのスムーズ移動', recommend: false },
+      { id: 20, area: 'sz', from: '逸扉酒店', to: '莲花山公园', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '公園まで短時間アクセス', recommend: false },
+      { id: 21, area: 'sz', from: '莲花山公园', to: '陶陶居', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '飲茶スポットへの移動', recommend: false },
+      { id: 22, area: 'sz', from: '陶陶居', to: '深圳湾公園', time: 30, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ベイエリアへの移動', recommend: false },
+      { id: 23, area: 'sz', from: '深圳湾公園', to: '深圳之眼', time: 20, cny: 30, jpy: 800, type: '配車/タクシー', note: 'ランドマーク間移動', recommend: false },
+      { id: 24, area: 'sz', from: '深圳湾公園', to: '海上世界', time: 30, cny: 50, jpy: 1350, type: '配車/タクシー', note: '商業エリアへ移動', recommend: false },
+      { id: 25, area: 'sz', from: '海上世界', to: '华强北', time: 25, cny: 80, jpy: 2200, type: '配車/タクシー', note: '電気街への移動', recommend: false },
+      { id: 26, area: 'sz', from: '逸扉酒店', to: '海上世界', time: 40, cny: 50, jpy: 1350, type: '配車/タクシー', note: 'ホテルからダイレクト移動', recommend: false },
+      { id: 27, area: 'sz', from: '海上世界', to: '深圳宝安国際空港', time: 40, cny: 70, jpy: 1900, type: '配車/タクシー', note: '空港への帰り', recommend: false },
+      { id: 28, area: 'sz', from: '华强北', to: '东门老街', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: '老街繁華街へ', recommend: false },
+      { id: 29, area: 'sz', from: '东门老街', to: '市民中心', time: 20, cny: 20, jpy: 600, type: '配車/タクシー', note: '市民中心エリアへ', recommend: false },
+      { id: 30, area: 'sz', from: '华强北', to: '市民中心', time: 4, cny: 2, jpy: 40, type: '地下鉄 (2駅)', note: '地下鉄2号線・8号線で直通4分', recommend: false }
     ];
 
     let selectedRouteIds = [];
