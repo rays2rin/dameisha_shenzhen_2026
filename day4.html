@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCHEDULE - Shenzhen & Hong Kong</title>
 
-  <!-- フォント読み込み -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -21,8 +20,10 @@
       background-color: #fcfcf9;
       color: #202A3A;
       font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
       min-height: 100vh;
-      padding-bottom: 80px;
+      overflow-x: hidden;
+      width: 100%;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -37,6 +38,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      width: 100%;
     }
 
     .menu-icon {
@@ -54,11 +56,17 @@
     }
 
     .site-title {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .site-title a {
       font-family: 'Cinzel', serif;
       font-weight: 700;
       font-size: 13px;
       letter-spacing: 1.5px;
       color: #202A3A;
+      text-decoration: none;
     }
 
     /* ドロワーメニュー */
@@ -113,92 +121,252 @@
 
     /* メインレイアウト */
     .page-container {
-      max-width: 500px;
+      max-width: 420px;
+      width: 100%;
       margin: 0 auto;
-      padding: 24px 16px;
+      padding: 40px 20px 60px 20px;
     }
 
-    /* ページヘッダー */
-    .header-section {
+    /* ヘッダー */
+    .schedule-header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 36px;
     }
 
-    .page-title {
+    .schedule-sub {
       font-family: 'Cinzel', serif;
-      font-size: 26px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      color: #718096;
+      margin-bottom: 6px;
+    }
+
+    .schedule-title {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
       font-weight: 700;
       color: #1f2b1a;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
-    /* スケジュールリスト */
-    .schedule-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .schedule-card {
-      background: #ffffff;
-      border: 1px solid #e5e2d5;
-      border-radius: 10px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-
-    .schedule-time {
+    .schedule-date {
       font-family: 'Cinzel', serif;
       font-size: 12px;
-      font-weight: 700;
-      color: #1e2d1d;
-      min-width: 80px;
-      padding-top: 2px;
+      font-weight: 400;
+      color: rgba(32, 42, 58, 0.6);
+      margin-top: 4px;
+      letter-spacing: 0.5px;
     }
 
-    .schedule-content {
-      flex: 1;
-      font-size: 13px;
+    /* タイムラインコンテナ */
+    .timeline-container {
+      position: relative;
+      padding-left: 52px;
+      width: 100%;
+    }
+
+    /* タイムラインの縦線 */
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
+      background-color: #e2ded0;
+    }
+
+    /* 各予定 */
+    .timeline-item {
+      position: relative;
+      padding-top: 22px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(229, 226, 213, 0.6);
+    }
+
+    .timeline-item:first-child {
+      padding-top: 0;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    /* タイムラインの丸 */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 26px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #1e2d1d;
+      z-index: 2;
+    }
+
+    .timeline-item:first-child::before {
+      top: 4px;
+    }
+
+    /* コンテンツ全体のラッパー */
+    .timeline-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* 時刻 */
+    .time {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: #718096;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    /* 予定名：通常のテキスト */
+    .action-text {
+      font-size: 14.5px;
+      font-weight: 600;
       color: #202A3A;
-      font-weight: 500;
-      line-height: 1.5;
+      display: block;
+      line-height: 1.35;
     }
 
-    .schedule-content a {
+    /* 予定名：リンクの場合 */
+    .place-link {
+      font-size: 14.5px;
+      font-weight: 600;
       color: #1e2d1d;
       text-decoration: underline;
-      font-weight: 700;
+      text-decoration-color: rgba(30, 45, 29, 0.4);
+      text-underline-offset: 3px;
+      display: inline-block;
+      line-height: 1.35;
+      transition: color 0.2s, text-decoration-color 0.2s;
     }
 
-    .schedule-content a:hover {
-      color: #4a5568;
+    .place-link:hover {
+      color: #2f442d;
+      text-decoration-color: rgba(47, 68, 45, 0.8);
     }
 
-    .note {
-      display: block;
+    /* 補足（ノート） */
+    .note-text {
       font-size: 11px;
+      font-weight: 400;
       color: #718096;
-      font-weight: normal;
-      margin-top: 2px;
+      margin-top: 3px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    /* MEMOフォーム */
+    .memo-card {
+      background: #ffffff;
+      border: 1px solid #e5e2d5;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .memo-title {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #1e2d1d;
+      margin-bottom: 4px;
+    }
+
+    .memo-desc {
+      font-size: 11px;
+      font-weight: 300;
+      color: #718096;
+      margin-bottom: 14px;
+    }
+
+    .memo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .memo-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2ded0;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      resize: vertical;
+      min-height: 60px;
+      background: #fcfcf9;
+      color: #202A3A;
+    }
+
+    .memo-input:focus {
+      border-color: #1e2d1d;
+      background: #ffffff;
+    }
+
+    .memo-btn {
+      align-self: flex-end;
+      background-color: #1e2d1d;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .memo-btn:hover {
+      background-color: #2f442d;
+    }
+
+    /* バックリンク */
+    .back-link {
+      margin-top: 36px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .back-link a {
+      font-family: 'Cinzel', serif;
+      color: #718096;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .back-link a:hover {
+      color: #1e2d1d;
     }
   </style>
 </head>
 <body>
 
-  <!-- ナビゲーションバー -->
   <header class="navbar">
     <div class="menu-icon" onclick="toggleMenu()">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
     </div>
-    <div class="site-title"><a href="index.html" style="text-decoration:none; color:inherit;">SHENZHEN & HONG KONG</a></div>
+    <div class="site-title"><a href="index.html">SHENZHEN & HONG KONG</a></div>
   </header>
 
-  <!-- ドロワーメニュー -->
   <nav class="drawer-menu" id="drawerMenu">
     <div class="close-btn" onclick="toggleMenu()">✕</div>
     <ul>
@@ -218,79 +386,96 @@
 
   <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-  <!-- メインコンテンツ -->
   <main class="page-container">
-
-    <div class="header-section">
-      <h1 class="page-title">SCHEDULE</h1>
+    
+    <div class="schedule-header">
+      <p class="schedule-sub">TRAVEL SCHEDULE</p>
+      <h1 class="schedule-title">SCHEDULE</h1>
+      <p class="schedule-date">October 2026</p>
     </div>
 
-    <!-- スケジュール一覧 -->
-    <div class="schedule-list">
-      
-      <div class="schedule-card">
-        <div class="schedule-time">10:00</div>
-        <div class="schedule-content">ホテル</div>
-      </div>
+    <div class="timeline-container">
 
-      <div class="schedule-card">
-        <div class="schedule-time">11:00</div>
-        <div class="schedule-content">
-          UrCove
-          <span class="note">荷物預け</span>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">10:00</span>
+          <span class="action-text">ホテル</span>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">11:10-12:00</div>
-        <div class="schedule-content">
-          福田口岸〜中環
-          <span class="note">落馬洲で入国審査</span>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">11:00</span>
+          <span class="action-text">UrCove</span>
+          <span class="note-text">荷物預け</span>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">12:30-12:40</div>
-        <div class="schedule-content">
-          <a href="landmark.html#star-ferry">スターフェリー</a>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">11:10 - 12:00</span>
+          <span class="action-text">福田口岸〜中環</span>
+          <span class="note-text">落馬洲で入国審査</span>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">13:10–14:30</div>
-        <div class="schedule-content">
-          <a href="landmark.html#k11">K11</a>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">12:30 - 12:40</span>
+          <a class="place-link" href="landmark.html#star-ferry">スターフェリー</a>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">15:20–16:30</div>
-        <div class="schedule-content">
-          <a href="landmark.html#victoria-peak">ヴィクトリアピーク</a>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">13:10 – 14:30</span>
+          <a class="place-link" href="landmark.html#k11">K11</a>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">16:50-17:20</div>
-        <div class="schedule-content">
-          買い物
-          <span class="note">お土産</span>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">15:20 – 16:30</span>
+          <a class="place-link" href="landmark.html#victoria-peak">ヴィクトリアピーク</a>
         </div>
       </div>
 
-      <div class="schedule-card">
-        <div class="schedule-time">17:30-18:20</div>
-        <div class="schedule-content">中環〜福田</div>
-      </div>
-
-      <div class="schedule-card">
-        <div class="schedule-time">18:20–20:30</div>
-        <div class="schedule-content">
-          食事
-          <span class="note">福田エリア</span>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">16:50 - 17:20</span>
+          <span class="action-text">買い物</span>
+          <span class="note-text">お土産</span>
         </div>
       </div>
 
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">17:30 - 18:20</span>
+          <span class="action-text">中環〜福田</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="time">18:20 – 20:30</span>
+          <span class="action-text">食事</span>
+          <span class="note-text">福田エリア</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="memo-card">
+      <div class="memo-title">MEMO</div>
+      <p class="memo-desc">行きたいお店や食べたいものを自由にメモして送ろう。</p>
+      <form class="memo-form" action="https://formspree.io/f/your_form_id" method="POST">
+        <textarea class="memo-input" name="message" placeholder="メモを入力..." required></textarea>
+        <button type="submit" class="memo-btn">送信する</button>
+      </form>
+    </div>
+
+    <div class="back-link">
+      <a href="index.html">← TOP PAGE</a>
     </div>
 
   </main>
