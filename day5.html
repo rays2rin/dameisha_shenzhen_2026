@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SCHEDULE - Shenzhen & Hong Kong</title>
+  <title>DAY 5 - Shenzhen & Hong Kong</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
     }
 
     body {
-      background-color: #fcfcf9;
+      background-color: #f6f8fb;
       color: #202A3A;
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 300;
@@ -127,7 +127,7 @@
       padding: 40px 20px 60px 20px;
     }
 
-    /* ヘッダー */
+    /* ヘッダー（そのまま維持） */
     .schedule-header {
       text-align: center;
       margin-bottom: 36px;
@@ -146,7 +146,7 @@
       font-family: 'Cinzel', serif;
       font-size: 32px;
       font-weight: 700;
-      color: #1f2b1a;
+      color: #202A3A;
       letter-spacing: 1px;
     }
 
@@ -159,14 +159,41 @@
       letter-spacing: 0.5px;
     }
 
-    /* タイムラインコンテナ */
+    /* 上部の他日程ナビボタン */
+    .top-day-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .top-day-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #3d617c;
+      text-decoration: none;
+      padding: 4px 10px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .top-day-btn:hover {
+      border-color: #3d617c;
+      background-color: #f8fafc;
+    }
+
+    /* タイムラインコンテナ（横幅そのまま、左端52px固定） */
     .timeline-container {
       position: relative;
       padding-left: 52px;
       width: 100%;
     }
 
-    /* タイムラインの縦線 */
+    /* タイムラインの縦線（1px・淡く） */
     .timeline-container::before {
       content: '';
       position: absolute;
@@ -174,15 +201,15 @@
       top: 10px;
       bottom: 10px;
       width: 1px;
-      background-color: #e2ded0;
+      background-color: #cbd5e1;
     }
 
-    /* 各予定 */
+    /* 各予定（上下余白を約20%減らしてコンパクトに） */
     .timeline-item {
       position: relative;
       padding-top: 22px;
       padding-bottom: 22px;
-      border-bottom: 1px solid rgba(229, 226, 213, 0.6);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
     }
 
     .timeline-item:first-child {
@@ -194,7 +221,7 @@
       border-bottom: none;
     }
 
-    /* タイムラインの丸 */
+    /* タイムラインの丸（約7〜8px） */
     .timeline-item::before {
       content: '';
       position: absolute;
@@ -204,7 +231,7 @@
       height: 7px;
       border-radius: 50%;
       background-color: #ffffff;
-      border: 1px solid #1e2d1d;
+      border: 1px solid #3d617c;
       z-index: 2;
     }
 
@@ -219,18 +246,18 @@
       gap: 3px;
     }
 
-    /* 時刻 */
+    /* 時刻（約20%縮小：12px） */
     .time {
       font-family: 'Cinzel', serif;
       font-size: 12px;
       font-weight: 400;
       letter-spacing: 0.5px;
-      color: #718096;
+      color: #64748b;
       display: block;
       margin-bottom: 1px;
     }
 
-    /* 予定名：通常のテキスト */
+    /* 予定名：通常のテキスト（約20%縮小：14.5px） */
     .action-text {
       font-size: 14.5px;
       font-weight: 600;
@@ -239,13 +266,13 @@
       line-height: 1.35;
     }
 
-    /* 予定名：リンクの場合 */
+    /* 予定名：リンクの場合（ネイビー＋下線で一目でわかるように維持） */
     .place-link {
       font-size: 14.5px;
       font-weight: 600;
-      color: #1e2d1d;
+      color: #3d617c;
       text-decoration: underline;
-      text-decoration-color: rgba(30, 45, 29, 0.4);
+      text-decoration-color: rgba(61, 97, 124, 0.4);
       text-underline-offset: 3px;
       display: inline-block;
       line-height: 1.35;
@@ -253,24 +280,42 @@
     }
 
     .place-link:hover {
-      color: #2f442d;
-      text-decoration-color: rgba(47, 68, 45, 0.8);
+      color: #2b475d;
+      text-decoration-color: rgba(43, 71, 93, 0.8);
     }
 
-    /* 補足（ノート） */
+    /* 補足（約20%縮小：11px） */
     .note-text {
       font-size: 11px;
       font-weight: 400;
-      color: #718096;
+      color: #64748b;
       margin-top: 3px;
       display: block;
       line-height: 1.4;
     }
 
+    /* 補足スタイルのリンク版 */
+    .note-link {
+      font-size: 11px;
+      font-weight: 400;
+      color: #64748b;
+      margin-top: 3px;
+      display: block;
+      line-height: 1.4;
+      text-decoration: underline;
+      text-decoration-color: rgba(100, 116, 139, 0.4);
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+
+    .note-link:hover {
+      color: #3d617c;
+    }
+
     /* MEMOフォーム */
     .memo-card {
       background: #ffffff;
-      border: 1px solid #e5e2d5;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 20px;
       margin-top: 40px;
@@ -282,7 +327,7 @@
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 2px;
-      color: #1e2d1d;
+      color: #3d617c;
       margin-bottom: 4px;
     }
 
@@ -303,24 +348,24 @@
       width: 100%;
       padding: 10px 12px;
       border-radius: 8px;
-      border: 1px solid #e2ded0;
+      border: 1px solid #cbd5e1;
       font-size: 12px;
       font-family: inherit;
       outline: none;
       resize: vertical;
       min-height: 60px;
-      background: #fcfcf9;
+      background: #f8fafc;
       color: #202A3A;
     }
 
     .memo-input:focus {
-      border-color: #1e2d1d;
+      border-color: #3d617c;
       background: #ffffff;
     }
 
     .memo-btn {
       align-self: flex-end;
-      background-color: #1e2d1d;
+      background-color: #3d617c;
       color: #ffffff;
       border: none;
       border-radius: 6px;
@@ -332,7 +377,7 @@
     }
 
     .memo-btn:hover {
-      background-color: #2f442d;
+      background-color: #2b475d;
     }
 
     /* バックリンク */
@@ -352,7 +397,7 @@
     }
 
     .back-link a:hover {
-      color: #1e2d1d;
+      color: #3d617c;
     }
   </style>
 </head>
@@ -390,76 +435,52 @@
     
     <div class="schedule-header">
       <p class="schedule-sub">TRAVEL SCHEDULE</p>
-      <h1 class="schedule-title">SCHEDULE</h1>
+      <h1 class="schedule-title">DAY 5</h1>
       <p class="schedule-date">October 2026</p>
+      
+      <div class="top-day-nav">
+        <a href="day3.html" class="top-day-btn">← DAY 3</a>
+        <a href="day4.html" class="top-day-btn">← DAY 4</a>
+      </div>
     </div>
 
     <div class="timeline-container">
 
       <div class="timeline-item">
         <div class="timeline-content">
-          <span class="time">10:00</span>
-          <span class="action-text">ホテル</span>
+          <span class="time">09:00 - 12:00</span>
+          <span class="action-text">flex time</span>
+          <span class="note-text">※DAY 4の夜に相談（再訪、買い物、他スポット等）</span>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-content">
-          <span class="time">11:00</span>
-          <span class="action-text">UrCove</span>
-          <span class="note-text">荷物預け</span>
+          <span class="time">12:00</span>
+          <a class="place-link" href="landmark.html#sea-world">海上世界</a>
+          <a class="note-link" href="foods.html#shenzhen">ランチ</a>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-content">
-          <span class="time">11:10 - 12:00</span>
-          <span class="action-text">福田口岸〜中環</span>
-          <span class="note-text">落馬洲で入国審査</span>
+          <span class="time">14:00</span>
+          <span class="action-text">深圳宝安国際空港 到着</span>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-content">
-          <span class="time">12:30 - 12:40</span>
-          <a class="place-link" href="landmark.html#star-ferry">スターフェリー</a>
+          <span class="time">17:00</span>
+          <span class="action-text">搭乗</span>
+          <span class="note-text">便名: NH966</span>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-content">
-          <span class="time">13:10 – 14:30</span>
-          <a class="place-link" href="landmark.html#k11">K11</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <span class="time">15:20 – 16:30</span>
-          <a class="place-link" href="landmark.html#victoria-peak">ヴィクトリアピーク</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <span class="time">16:50 - 17:20</span>
-          <span class="action-text">買い物</span>
-          <span class="note-text">お土産</span>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <span class="time">17:30 - 18:20</span>
-          <span class="action-text">中環〜福田</span>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-content">
-          <span class="time">18:20 – 20:30</span>
-          <span class="action-text">食事</span>
-          <span class="note-text">福田エリア</span>
+          <span class="time">22:10</span>
+          <span class="action-text">羽田空港 到着</span>
         </div>
       </div>
 
