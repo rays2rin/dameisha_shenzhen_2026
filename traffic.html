@@ -452,18 +452,21 @@
           <select id="start-point" onchange="onFilterChange()">
             <option value="" selected>選択してください</option>
             <optgroup label="深圳">
-              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
-              <option value="大梅沙洲际">大梅沙洲际</option>
-              <option value="JW万豪">JW万豪</option>
-              <option value="海上世界">海上世界</option>
-              <option value="深业上城">深业上城</option>
-              <option value="福田">福田</option>
+              <option value="大梅沙京基洲际酒店">大梅沙京基洲际酒店</option>
+              <option value="UrCove">UrCove</option>
               <option value="大梅沙">大梅沙</option>
               <option value="小梅沙">小梅沙</option>
+              <option value="深业上城">深业上城</option>
+              <option value="宝安空港">宝安空港</option>
+              <option value="海上世界">海上世界</option>
+              <option value="福田">福田</option>
               <option value="福田口岸">福田口岸</option>
               <option value="万象天地">万象天地</option>
               <option value="COCO Park">COCO Park</option>
               <option value="Riad">Riad</option>
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="大梅沙洲际">大梅沙洲际</option>
+              <option value="JW万豪">JW万豪</option>
               <option value="逸扉酒店">逸扉酒店</option>
               <option value="深圳湾公園">深圳湾公園</option>
               <option value="华强北">华强北</option>
@@ -490,20 +493,23 @@
           <select id="end-point" onchange="onFilterChange()">
             <option value="" selected>選択してください</option>
             <optgroup label="深圳">
-              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
-              <option value="大梅沙洲际">大梅沙洲际</option>
-              <option value="JW万豪">JW万豪</option>
-              <option value="海上世界">海上世界</option>
-              <option value="深业上城">深业上城</option>
-              <option value="福田">福田</option>
+              <option value="大梅沙京基洲际酒店">大梅沙京基洲际酒店</option>
+              <option value="UrCove">UrCove</option>
               <option value="大梅沙">大梅沙</option>
               <option value="小梅沙">小梅沙</option>
+              <option value="深业上城">深业上城</option>
+              <option value="宝安空港">宝安空港</option>
+              <option value="海上世界">海上世界</option>
+              <option value="福田">福田</option>
               <option value="福田口岸">福田口岸</option>
               <option value="万象天地">万象天地</option>
               <option value="COCO Park">COCO Park</option>
               <option value="Riad">Riad</option>
+              <option value="深圳宝安国際空港">深圳宝安国際空港</option>
+              <option value="大梅沙洲际">大梅沙洲际</option>
+              <option value="JW万豪">JW万豪</option>
               <option value="逸扉酒店">逸扉酒店</option>
-              <option value="华强北">华强北</option>
+              <option value="華強北">华强北</option>
               <option value="市民中心">市民中心</option>
               <option value="东门老街">东门老街</option>
               <option value="深圳之眼">深圳之眼</option>
@@ -524,7 +530,7 @@
         </div>
       </div>
 
-      <!-- 移動手段絞り込みタブ（深圳を左、香港を右に変更） -->
+      <!-- 移動手段絞り込みタブ -->
       <div class="transport-tabs">
         <div class="t-tab active" onclick="setTab(this, 'sz')">深圳</div>
         <div class="t-tab" onclick="setTab(this, 'hk')">香港</div>
@@ -562,8 +568,20 @@
       { id: 5, area: 'hk', from: '花園道', to: '旺角', time: 25, hkd: 120, jpy: 2800, type: 'タクシー', note: '九龍エリアへ移動', recommend: false },
       { id: 6, area: 'hk', from: '旺角', to: '皇岗', time: 30, hkd: 380, jpy: 8700, type: 'タクシー', note: '旺角から国境口岸へ', recommend: false },
 
-      // 深圳ルート（追加分含む）
-      { id: 7, area: 'sz', from: '深圳宝安国際空港', to: '大梅沙洲际', time: 65, cny: 200, jpy: 5400, type: '配車/タクシー', note: '空港から大梅沙洲际へ', recommend: true },
+      // 新規追加ルート（UrCove・大梅沙京基洲际酒店関連など）
+      { id: 31, area: 'sz', from: '大梅沙京基洲际酒店', to: 'UrCove', time: 50, cny: 150, jpy: 4100, type: '配車/タクシー', note: 'ホテル間・拠点間のスムーズ移動', recommend: true },
+      { id: 32, area: 'sz', from: 'UrCove', to: '海上世界', time: 30, cny: 60, jpy: 1600, type: '配車/タクシー', note: '海上世界エリアへ移動', recommend: false },
+      { id: 33, area: 'sz', from: '深业上城', to: 'UrCove', time: 20, cny: 40, jpy: 1100, type: '配車/タクシー', note: '深业上城からUrCoveへ', recommend: false },
+      { id: 34, area: 'sz', from: 'UrCove', to: '宝安空港', time: 30, cny: 100, jpy: 2700, type: '配車/タクシー', note: '空港へのアクセス', recommend: false },
+      { id: 35, area: 'sz', from: 'UrCove', to: '福田', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: '福田エリアへすぐ移動', recommend: false },
+      { id: 36, area: 'sz', from: 'UrCove', to: '福田口岸', time: 12, cny: 25, jpy: 700, type: '配車/タクシー', note: '国境口岸へアクセス', recommend: false },
+      { id: 37, area: 'sz', from: '大梅沙', to: '小梅沙', time: 7, cny: 20, jpy: 540, type: '配車/タクシー', note: 'ビーチエリア間の近距離移動', recommend: false },
+      { id: 38, area: 'sz', from: 'UrCove', to: '万象天地', time: 25, cny: 55, jpy: 1500, type: '配車/タクシー', note: 'ショッピングモールへ移動', recommend: false },
+      { id: 39, area: 'sz', from: 'UrCove', to: 'COCO Park', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: 'COCO Parkへ移動', recommend: false },
+      { id: 40, area: 'sz', from: 'UrCove', to: 'Riad', time: 12, cny: 25, jpy: 700, type: '配車/タクシー', note: 'Riadへ移動', recommend: false },
+
+      // 既存の深圳ルート
+      { id: 7, area: 'sz', from: '深圳宝安国際空港', to: '大梅沙洲际', time: 65, cny: 200, jpy: 5400, type: '配車/タクシー', note: '空港から大梅沙洲际へ', recommend: false },
       { id: 8, area: 'sz', from: '大梅沙洲际', to: 'JW万豪', time: 50, cny: 140, jpy: 3800, type: '配車/タクシー', note: 'リゾートエリアからJW万豪へ', recommend: false },
       { id: 9, area: 'sz', from: 'JW万豪', to: '海上世界', time: 30, cny: 60, jpy: 1600, type: '配車/タクシー', note: '海上世界へ移動', recommend: false },
       { id: 10, area: 'sz', from: '深业上城', to: 'JW万豪', time: 20, cny: 40, jpy: 1100, type: '配車/タクシー', note: '深业上城からJW万豪へ', recommend: false },
@@ -575,8 +593,6 @@
       { id: 16, area: 'sz', from: 'JW万豪', to: 'COCO Park', time: 10, cny: 25, jpy: 700, type: '配車/タクシー', note: 'COCO Parkへ移動', recommend: false },
       { id: 17, area: 'sz', from: 'JW万豪', to: 'Riad', time: 12, cny: 25, jpy: 700, type: '配車/タクシー', note: 'Riadへ移動', recommend: false },
       { id: 18, area: 'sz', from: 'Riad', to: '福田口岸', time: 12, cny: 30, jpy: 800, type: '配車/タクシー', note: 'Riadから福田口岸へ', recommend: false },
-
-      // 既存の深圳ルート
       { id: 19, area: 'sz', from: '深圳宝安国際空港', to: '逸扉酒店', time: 40, cny: 60, jpy: 1600, type: '配車/タクシー', note: '空港からのスムーズ移動', recommend: false },
       { id: 20, area: 'sz', from: '逸扉酒店', to: '莲花山公园', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '公園まで短時間アクセス', recommend: false },
       { id: 21, area: 'sz', from: '莲花山公园', to: '陶陶居', time: 10, cny: 15, jpy: 400, type: '配車/タクシー', note: '飲茶スポットへの移動', recommend: false },
@@ -592,7 +608,7 @@
     ];
 
     let selectedRouteIds = [];
-    let currentAreaFilter = 'sz'; // 初期表示を深圳に変更
+    let currentAreaFilter = 'sz';
 
     function toggleMenu() {
       document.getElementById('drawerMenu').classList.toggle('active');
@@ -731,7 +747,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 初期状態は未選択スタート（タブの順序変更に伴い初期エリアも深圳に設定）
     onFilterChange();
   </script>
 </body>
