@@ -159,6 +159,33 @@
       letter-spacing: 0.5px;
     }
 
+    /* 上部の他日程ナビボタン */
+    .top-day-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .top-day-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #1e2d1d;
+      text-decoration: none;
+      padding: 4px 10px;
+      background-color: #ffffff;
+      border: 1px solid #e5e2d5;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .top-day-btn:hover {
+      border-color: #1e2d1d;
+      background-color: #f7f6f0;
+    }
+
     /* タイムラインコンテナ */
     .timeline-container {
       position: relative;
@@ -390,8 +417,14 @@
     
     <div class="schedule-header">
       <p class="schedule-sub">TRAVEL SCHEDULE</p>
-      <h1 class="schedule-title">SCHEDULE</h1>
+      <h1 class="schedule-title">DAY 4</h1>
       <p class="schedule-date">October 2026</p>
+      
+      <!-- 他日程へのナビボタン -->
+      <div class="top-day-nav">
+        <a href="day3.html" class="top-day-btn">← DAY 3</a>
+        <a href="day5.html" class="top-day-btn">DAY 5 →</a>
+      </div>
     </div>
 
     <div class="timeline-container">
