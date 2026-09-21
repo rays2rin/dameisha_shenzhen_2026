@@ -40,7 +40,7 @@ html_content = """<!DOCTYPE html>
         letter-spacing: -0.5px;
     }
     .logo-area span {
-        color: #ff9900; /* Trip.comのブランドカラー（黄色/オレンジ）に修正 */
+        color: #ff9900; /* 「.」だけをオレンジに指定 */
     }
     .voucher-info {
         float: right;
@@ -194,7 +194,8 @@ html_content = """<!DOCTYPE html>
 <div class="container">
     <!-- Header -->
     <div class="header clearfix">
-        <div class="logo-area">Trip<span>.com</span></div>
+        <!-- 「.」だけを span で囲むように修正 -->
+        <div class="logo-area">Trip<span>.</span>com</div>
         <div class="voucher-info">
             Check-in voucher<br>
             Confirmation no. <span class="conf-no">2609201922196046731</span><br>
