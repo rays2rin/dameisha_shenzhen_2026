@@ -1,1 +1,294 @@
 
+html_content = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 10mm 10mm;
+        background-color: #ffffff;
+    }
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+        font-size: 10pt;
+        line-height: 1.4;
+    }
+    .container {
+        width: 100%;
+        border: 2px solid #2b579a;
+        background: #ffffff;
+        padding: 15px;
+    }
+    /* Header */
+    .header {
+        display: block;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #2b579a;
+        padding-bottom: 10px;
+    }
+    .logo-area {
+        float: left;
+        font-size: 20pt;
+        font-weight: bold;
+        color: #2b579a;
+        letter-spacing: -0.5px;
+    }
+    .logo-area span {
+        color: #0086f0;
+    }
+    .voucher-info {
+        float: right;
+        text-align: right;
+        font-size: 9pt;
+        color: #555555;
+    }
+    .voucher-info .conf-no {
+        font-size: 11pt;
+        font-weight: bold;
+        color: #2b579a;
+    }
+    .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Hotel Info Box */
+    .hotel-box {
+        border: 1px solid #b0c4de;
+        background-color: #f8fbff;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    .hotel-thumb {
+        float: left;
+        width: 90px;
+        height: 65px;
+        background-color: #ddd;
+        border: 1px solid #ccc;
+        margin-right: 12px;
+        text-align: center;
+        line-height: 65px;
+        font-size: 8pt;
+        color: #666;
+    }
+    .hotel-details {
+        overflow: hidden;
+    }
+    .hotel-name {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #2b579a;
+        margin-bottom: 4px;
+    }
+    .hotel-address, .hotel-phone {
+        font-size: 8.5px;
+        color: #555;
+        margin-bottom: 2px;
+    }
+
+    /* Dates Section */
+    .dates-section {
+        border: 1px solid #b0c4de;
+        margin-bottom: 15px;
+        background: #fff;
+    }
+    .date-col-3 {
+        float: left;
+        width: 33.333%;
+        text-align: center;
+        padding: 10px 5px;
+        border-right: 1px solid #b0c4de;
+    }
+    .date-col-3:last-child {
+        border-right: none;
+    }
+    .date-label {
+        font-size: 8.5pt;
+        color: #555;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+    .date-value {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #111;
+        margin-bottom: 2px;
+    }
+    .date-sub {
+        font-size: 8pt;
+        color: #666;
+    }
+
+    /* Main Split Section */
+    .split-section {
+        border: 1px solid #b0c4de;
+        margin-bottom: 15px;
+    }
+    .col-left {
+        float: left;
+        width: 38%;
+        padding: 12px;
+        border-right: 1px solid #b0c4de;
+        min-height: 220px;
+    }
+    .col-right {
+        float: right;
+        width: 62%;
+        padding: 12px;
+        min-height: 220px;
+    }
+    
+    .section-title {
+        font-size: 10.5pt;
+        font-weight: bold;
+        color: #2b579a;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 4px;
+    }
+    
+    .field-label {
+        font-size: 8pt;
+        color: #777;
+        margin-top: 6px;
+    }
+    .field-value {
+        font-size: 9pt;
+        color: #333;
+        margin-bottom: 4px;
+    }
+    .price-big {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2b579a;
+    }
+
+    /* Bottom Section */
+    .bottom-section {
+        border: 1px solid #b0c4de;
+    }
+    .bottom-col-left {
+        float: left;
+        width: 45%;
+        padding: 12px;
+        border-right: 1px solid #b0c4de;
+        min-height: 110px;
+    }
+    .bottom-col-right {
+        float: right;
+        width: 55%;
+        padding: 12px;
+        min-height: 110px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header clearfix">
+        <div class="logo-area">Trip<span>.com</span></div>
+        <div class="voucher-info">
+            Check-in voucher<br>
+            Confirmation no. <span class="conf-no">2609201922196046731</span><br>
+            PIN : 1015 (Do not disclose)<br>
+            Booking No.: 1658114986849358
+        </div>
+    </div>
+
+    <!-- Hotel Box -->
+    <div class="hotel-box clearfix">
+        <div class="hotel-thumb">Hotel Photo</div>
+        <div class="hotel-details">
+            <div class="hotel-name">UrCove By Hyatt Shenzhen Futian CBD</div>
+            <div class="hotel-address">Address: 1st Floor, East Podium Building, Guangdong Financial Center, No. 9 Pengcheng 1st Road, Fuxin Community, Lianhua Subdistrict, Futian District, Shenzhen, Guangdong, China</div>
+            <div class="hotel-phone">Phone: +86-755-89676680-0</div>
+        </div>
+    </div>
+
+    <!-- Dates Section -->
+    <div class="dates-section clearfix">
+        <div class="date-col-3">
+            <div class="date-label">Check-in</div>
+            <div class="date-value">Oct 26, 2026</div>
+            <div class="date-sub">Sat<br>12:00 PM-6:00 PM<br><span style="font-size:7.5pt; color:#888;">Hotel's local time</span></div>
+        </div>
+        <div class="date-col-3">
+            <div class="date-label">Check-out</div>
+            <div class="date-value">Oct 28, 2026</div>
+            <div class="date-sub">Wed<br>Before 2:00 PM<br><span style="font-size:7.5pt; color:#888;">Hotel's local time</span></div>
+        </div>
+        <div class="date-col-3" style="padding-top: 15px;">
+            <div class="date-label">Rooms &nbsp;&nbsp;&nbsp; Nights</div>
+            <div class="date-value" style="font-size: 14pt; color: #2b579a;">1 &nbsp;&nbsp;/&nbsp;&nbsp; 2</div>
+        </div>
+    </div>
+
+    <!-- Middle Split Section -->
+    <div class="split-section clearfix">
+        <div class="col-left">
+            <div class="section-title">Price details</div>
+            <div class="field-label">Pay at Hotel</div>
+            <div class="price-big">CNY 4,985.00</div>
+            <div class="field-label" style="margin-top: 8px;">Includes:</div>
+            <div class="field-value">VAT CNY 186.12</div>
+        </div>
+        <div class="col-right">
+            <div class="section-title">Superior Twin</div>
+            
+            <div class="field-label">Guest names</div>
+            <div class="field-value" style="color: #999;">HIKARI HONDA</div>
+            <div class="field-label">Occupancy (per room)</div>
+            <div class="field-value">This room type can accommodate up to 2 guests with a max. of 2 adults</div>
+
+            <div class="field-label">Room info</div>
+            <div class="field-value">2 single beds</div>
+
+            <div class="field-label">Meals</div>
+            <div class="field-value">
+                Oct 27 &nbsp;&nbsp;&nbsp; Breakfast for 2 guests per room<br>
+                Oct 28 &nbsp;&nbsp;&nbsp; Breakfast for 2 guests per room
+            </div>
+
+            <div class="field-label">Package</div>
+            <div class="field-value">Sky Art Museum Major Exhibition - Complimentary Exhibition Ticket with Stay (1 per day)</div>
+
+            <div class="field-label">Rewards</div>
+            <div class="field-value">Breakfast, Late Check-out</div>
+        </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="bottom-section clearfix">
+        <div class="bottom-col-left">
+            <div class="section-title">Room amenities</div>
+            <div class="field-value" style="font-size: 8pt; color: #555;">
+                Toothbrushes · Toothpaste · Body wash · Shampoo · Conditioner · Shower cap · Comb · Razor · Private bathroom · Private toilet · Smart toilet · Hair dryer · Shower · Vanity mirror in bathroom · Towels · Bath towels · Hot water (24 hours) · Slippers · Rainfall shower · Bidet sprayer
+            </div>
+        </div>
+        <div class="bottom-col-right">
+            <div class="section-title">Cancellation policy</div>
+            <div class="field-value" style="font-size: 9pt;">
+                You can cancel for free before check-in.
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+"""
+
+with open("trip_voucher.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+from weasyprint import HTML
+HTML("trip_voucher.html").write_pdf("trip_voucher.pdf")
