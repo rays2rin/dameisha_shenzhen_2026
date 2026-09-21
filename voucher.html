@@ -40,7 +40,7 @@ html_content = """<!DOCTYPE html>
         letter-spacing: -0.5px;
     }
     .logo-area span {
-        color: #0086f0;
+        color: #ff9900; /* Trip.comのブランドカラー（黄色/オレンジ）に修正 */
     }
     .voucher-info {
         float: right;
@@ -194,7 +194,7 @@ html_content = """<!DOCTYPE html>
 <div class="container">
     <!-- Header -->
     <div class="header clearfix">
-        <div class="logo-area">Trip<span>.</span>com</span></div>
+        <div class="logo-area">Trip<span>.com</span></div>
         <div class="voucher-info">
             Check-in voucher<br>
             Confirmation no. <span class="conf-no">2609201922196046731</span><br>
@@ -244,7 +244,7 @@ html_content = """<!DOCTYPE html>
             <div class="section-title">Superior Twin</div>
             
             <div class="field-label">Guest names</div>
-            <div class="field-value">Rui</div>
+            <div class="field-value">HIKARI HONDA</div>
 
             <div class="field-label">Occupancy (per room)</div>
             <div class="field-value">This room type can accommodate up to 2 guests with a max. of 2 adults</div>
@@ -285,3 +285,10 @@ html_content = """<!DOCTYPE html>
 
 </body>
 </html>
+"""
+
+with open("trip_voucher.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+from weasyprint import HTML
+HTML("trip_voucher.html").write_pdf("trip_voucher.pdf")
